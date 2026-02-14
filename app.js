@@ -30,6 +30,12 @@
 
   let sigMode = 'cursive'; // 'cursive' or 'draw'
 
+  // --- Set logo sources from embedded base64 data (avoids CORS issues) ---
+  if (typeof LOGO_DATA_URL !== 'undefined') {
+    document.getElementById('headerLogo').src = LOGO_DATA_URL;
+    document.getElementById('certLogo').src = LOGO_DATA_URL;
+  }
+
   // --- Defaults ---
   dateInput.value = new Date().toISOString().split('T')[0];
   certIdInput.value = generateCertId();
@@ -93,7 +99,7 @@
     prevOccasion.textContent = occasion;
 
     if (descriptionInput.value.trim()) {
-      prevDescription.textContent = 'for ' + descriptionInput.value.trim();
+      prevDescription.textContent = descriptionInput.value.trim();
       prevDescription.classList.remove('hidden');
     } else {
       prevDescription.textContent = '';
@@ -206,44 +212,44 @@
     exportBtn.disabled = true;
     exportBtn.textContent = 'Generating...';
 
-    // Save current styles
     const savedTransform = cert.style.transform;
     const savedPosition = cert.style.position;
     const savedLeft = cert.style.left;
     const savedTop = cert.style.top;
 
     try {
-      // Reset to full size for capture
       cert.style.transform = 'none';
-      cert.style.position = 'static';
-      cert.style.left = '';
-      cert.style.top = '';
+      cert.style.position = 'relative';
+      cert.style.left = '0';
+      cert.style.top = '0';
       wrapper.style.overflow = 'visible';
 
+      await new Promise(r => setTimeout(r, 300));
+
       const canvas = await html2canvas(cert, {
-        scale: 2,
+        scale: 3,
         useCORS: true,
-        backgroundColor: '#FFFFFF',
+        allowTaint: true,
+        backgroundColor: null,
         width: 1122,
-        height: 794
+        height: 794,
+        logging: false
       });
 
       const { jsPDF } = window.jspdf;
       const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-
       const pageW = pdf.internal.pageSize.getWidth();
       const pageH = pdf.internal.pageSize.getHeight();
-      const imgData = canvas.toDataURL('image/png');
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
 
-      pdf.addImage(imgData, 'PNG', 0, 0, pageW, pageH);
+      pdf.addImage(imgData, 'JPEG', 0, 0, pageW, pageH);
 
       const fileName = (nameInput.value || 'certificate').replace(/\s+/g, '_');
       pdf.save(`ECSF_Certificate_${fileName}.pdf`);
     } catch (err) {
       console.error('PDF export error:', err);
-      alert('PDF generation failed. Please try again.');
+      alert('PDF generation failed: ' + err.message);
     } finally {
-      // Restore styles
       cert.style.transform = savedTransform;
       cert.style.position = savedPosition;
       cert.style.left = savedLeft;

@@ -6,7 +6,7 @@
   <title>ECSF Certificate Generator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Lora:ital,wght@0,400;0,700;1,400;1,600&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
     <!-- Left Sidebar -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
-        <img src="logo.png" alt="ECSF Logo" class="header-logo">
+        <img alt="ECSF Logo" class="header-logo" id="headerLogo">
         <h1>ECSF Certificate Generator</h1>
         <p class="subtitle">Exeter Chinese Student Fellowship</p>
       </div>
@@ -132,7 +132,7 @@
                   </div>
 
                   <div class="cert-seal">
-                    <img src="logo.png" alt="ECSF Logo" class="cert-logo">
+                    <img alt="ECSF Logo" class="cert-logo" id="certLogo">
                   </div>
 
                   <div class="cert-date-area">
@@ -151,8 +151,9 @@
     </section>
   </main>
 
+  <script src="logo-data.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.3/jspdf.umd.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
