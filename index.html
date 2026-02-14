@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECSF Certificate Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <main class="app-main">
+    <!-- Left Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <img src="logo.png" alt="ECSF Logo" class="header-logo">
+        <h1>ECSF Certificate Generator</h1>
+        <p class="subtitle">Exeter Chinese Student Fellowship</p>
+      </div>
+
+      <div class="sidebar-content">
+        <h2>Certificate Details</h2>
+
+        <div class="form-group">
+          <label for="recipientName">Recipient Name <span class="required">*</span></label>
+          <input type="text" id="recipientName" placeholder="e.g. John Smith">
+        </div>
+
+        <div class="form-group">
+          <label for="occasion">Occasion <span class="required">*</span></label>
+          <select id="occasion">
+            <option value="Completion">Completion</option>
+            <option value="Participation">Participation</option>
+            <option value="Achievement">Achievement</option>
+            <option value="Appreciation">Appreciation</option>
+            <option value="Attendance">Attendance</option>
+            <option value="Service">Service</option>
+            <option value="Leadership">Leadership</option>
+            <option value="Membership">Membership</option>
+            <option value="custom">Custom...</option>
+          </select>
+          <input type="text" id="customOccasion" class="hidden" placeholder="Enter custom occasion">
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description <span class="optional">optional</span></label>
+          <textarea id="description" rows="2" placeholder="e.g. ECSF Bible Study Programme 2026"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="certDate">Date <span class="required">*</span></label>
+          <input type="date" id="certDate">
+        </div>
+
+        <div class="form-group">
+          <label for="certId">Certificate ID <span class="optional">auto</span></label>
+          <input type="text" id="certId" placeholder="Auto-generated">
+        </div>
+
+        <div class="form-group">
+          <label for="signedBy">Signed By <span class="required">*</span></label>
+          <input type="text" id="signedBy" placeholder="e.g. Pastor Li">
+        </div>
+
+        <div class="form-group">
+          <label for="sigTitle">Signatory Title <span class="optional">optional</span></label>
+          <input type="text" id="sigTitle" placeholder="e.g. Director, Fellowship Leader">
+        </div>
+
+        <div class="form-group">
+          <label>Signature Style</label>
+          <div class="sig-mode-toggle">
+            <button type="button" class="sig-mode-btn active" id="sigModeCursive">Cursive Text</button>
+            <button type="button" class="sig-mode-btn" id="sigModeDraw">Draw</button>
+          </div>
+        </div>
+
+        <div class="form-group hidden" id="sigPadGroup">
+          <label>Draw Signature</label>
+          <div class="sig-pad-container">
+            <canvas id="sigCanvas" width="280" height="100"></canvas>
+            <button type="button" id="clearSig" class="clear-sig-btn">Clear</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Toggle Button -->
+    <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar">
+      <span class="toggle-icon" id="toggleIcon">&#9664;</span>
+    </button>
+
+    <!-- Live Preview -->
+    <section class="preview-panel">
+      <div class="preview-header">
+        <h2>Live Preview</h2>
+        <button id="exportBtn" class="export-btn">Export PDF</button>
+      </div>
+      <div class="preview-wrapper" id="previewWrapper">
+        <div id="certificate" class="certificate">
+          <!-- Corner decorations -->
+          <div class="corner-deco top-left"></div>
+          <div class="corner-deco top-right"></div>
+          <div class="corner-deco bottom-left"></div>
+          <div class="corner-deco bottom-right"></div>
+
+          <!-- Outer border frame -->
+          <div class="cert-frame">
+            <div class="cert-inner-frame">
+              <div class="cert-content">
+                <!-- Watermark logo -->
+                <img src="logo.png" alt="" class="cert-watermark">
+
+                <h1 class="cert-title">Certificate of <span id="prevOccasion">Completion</span></h1>
+
+                <div class="cert-divider"></div>
+
+                <p class="cert-presented">This is to certify that</p>
+
+                <p class="cert-name" id="prevName">Recipient Name</p>
+
+                <p class="cert-description" id="prevDescription"></p>
+                <p class="cert-recognition">has been recognised by the Exeter Chinese Student Fellowship.</p>
+
+                <!-- Bottom: signature left, seal center, date right -->
+                <div class="cert-bottom">
+                  <div class="cert-signature-area">
+                    <p id="prevSigCursive" class="cert-sig-cursive">Signatory</p>
+                    <img id="prevSigImage" class="cert-sig-image hidden" alt="Signature">
+                    <div class="cert-sig-line"></div>
+                    <p class="cert-signatory" id="prevSignedBy">Signatory</p>
+                    <p class="cert-sig-title" id="prevSigTitle"></p>
+                  </div>
+
+                  <div class="cert-seal">
+                    <img src="logo.png" alt="ECSF Logo" class="cert-logo">
+                  </div>
+
+                  <div class="cert-date-area">
+                    <p class="cert-date-value" id="prevDate"></p>
+                    <div class="cert-sig-line"></div>
+                    <p class="cert-signatory">Date</p>
+                  </div>
+                </div>
+
+                <p class="cert-id" id="prevCertId"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
