@@ -17,7 +17,6 @@
   const prevDescription = document.getElementById('prevDescription');
   const prevDate = document.getElementById('prevDate');
   const prevCertId = document.getElementById('prevCertId');
-  const prevSignedBy = document.getElementById('prevSignedBy');
   const prevSigTitle = document.getElementById('prevSigTitle');
   const prevSigImage = document.getElementById('prevSigImage');
   const prevSigCursive = document.getElementById('prevSigCursive');
@@ -111,12 +110,11 @@
     }
 
     prevCertId.textContent = certIdInput.value ? 'Ref: ' + certIdInput.value : '';
-    prevSignedBy.textContent = signedByInput.value || 'Signatory';
     prevSigTitle.textContent = sigTitleInput.value || '';
 
     // Signature mode
     if (sigMode === 'cursive') {
-      prevSigCursive.textContent = signedByInput.value || 'Signatory';
+      prevSigCursive.textContent = signedByInput.value || 'Signature';
       prevSigCursive.classList.remove('hidden');
       prevSigImage.classList.add('hidden');
     } else {
