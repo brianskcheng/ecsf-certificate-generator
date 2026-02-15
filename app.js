@@ -43,11 +43,42 @@
   scalePreview();
   window.addEventListener('resize', scalePreview);
 
+  // --- Info modal ---
+  const infoBtn = document.getElementById('infoBtn');
+  const infoModal = document.getElementById('infoModal');
+  const infoClose = document.getElementById('infoClose');
+
+  infoBtn.addEventListener('click', () => infoModal.classList.remove('hidden'));
+  infoClose.addEventListener('click', () => infoModal.classList.add('hidden'));
+  infoModal.addEventListener('click', (e) => {
+    if (e.target === infoModal) infoModal.classList.add('hidden');
+  });
+
   // --- Sidebar toggle ---
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+  function isMobile() {
+    return window.matchMedia('(max-width: 640px)').matches;
+  }
+
+  function openMobileSidebar() {
+    sidebar.classList.add('mobile-open');
+    sidebarBackdrop.classList.add('visible');
+  }
+
+  function closeMobileSidebar() {
+    sidebar.classList.remove('mobile-open');
+    sidebarBackdrop.classList.remove('visible');
+  }
+
   sidebarToggle.addEventListener('click', () => {
     sidebar.classList.toggle('collapsed');
     setTimeout(scalePreview, 320);
   });
+
+  mobileMenuBtn.addEventListener('click', openMobileSidebar);
+  sidebarBackdrop.addEventListener('click', closeMobileSidebar);
 
   // --- Signature mode toggle ---
   sigModeCursive.addEventListener('click', () => {
@@ -207,8 +238,48 @@
     prevSigImage.classList.remove('hidden');
   }
 
+  // --- Export confirmation modal ---
+  const exportModal = document.getElementById('exportModal');
+  const modalMissingList = document.getElementById('modalMissingList');
+  const modalCancel = document.getElementById('modalCancel');
+  const modalConfirm = document.getElementById('modalConfirm');
+
+  function showExportModal(missingFields) {
+    modalMissingList.innerHTML = missingFields.map(f => `<li>${f}</li>`).join('');
+    exportModal.classList.remove('hidden');
+  }
+
+  function hideExportModal() {
+    exportModal.classList.add('hidden');
+  }
+
+  modalCancel.addEventListener('click', hideExportModal);
+  exportModal.addEventListener('click', (e) => {
+    if (e.target === exportModal) hideExportModal();
+  });
+
   // --- PDF Export ---
   async function exportPDF() {
+    const missing = [];
+    if (!nameInput.value.trim()) missing.push('Recipient Name');
+    if (occasionSelect.value === 'custom' && !customOccasionInput.value.trim()) missing.push('Occasion');
+    if (!dateInput.value) missing.push('Date');
+    if (!signedByInput.value.trim()) missing.push('Signed By');
+
+    if (missing.length > 0) {
+      showExportModal(missing);
+      return;
+    }
+
+    doExport();
+  }
+
+  modalConfirm.addEventListener('click', () => {
+    hideExportModal();
+    doExport();
+  });
+
+  async function doExport() {
     exportBtn.disabled = true;
     exportBtn.textContent = 'Generating...';
 

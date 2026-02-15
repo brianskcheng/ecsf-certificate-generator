@@ -2,23 +2,30 @@
 
 A browser-based certificate generator built for the Exeter Chinese Student Fellowship. Fill in the details, see a live preview, and export to PDF -- no server or installation required.
 
+**Version:** 1.1 | **Author:** Brian Cheng | **Released:** February 2026
+
 ## Features
 
 - **Live preview** -- certificate updates in real time as you type
 - **Customizable fields** -- recipient name, occasion, description, date, signatory, and certificate ID
+- **Occasion presets** -- choose from common occasions or enter a custom one
+- **Auto-generated certificate ID** -- unique ID created automatically, with manual override
 - **Signature options** -- cursive text or freehand draw
 - **PDF export** -- one-click download as a formatted A4 landscape PDF
+- **Export validation** -- warns when required fields are missing, with option to export anyway
 - **Collapsible sidebar** -- maximize preview space when needed
-- **Responsive layout** -- adapts to smaller screens
+- **Responsive layout** -- adapts to smaller screens with a mobile-friendly menu
+- **About dialog** -- in-app info and link to the GitHub repository
 
 ## Usage
 
 Open `index.html` in any modern browser. No build step or install required.
 
 1. Enter the recipient's name and select an occasion (or create a custom one).
-2. Optionally add a description, date, certificate ID, and signatory details.
-3. Choose a signature style -- cursive text or draw your own.
-4. Click **Export PDF** to download the certificate.
+2. Optionally add a description, certificate ID, and signatory title.
+3. Set the date and signatory name.
+4. Choose a signature style -- cursive text or draw your own.
+5. Click **Export PDF** to download the certificate.
 
 ## Tech Stack
 
