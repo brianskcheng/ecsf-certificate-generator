@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Lora:ital,wght@0,400;0,700;1,400;1,600&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=__BUILD_HASH__">
   <style>
     .app-loader{position:fixed;inset:0;z-index:9999;background:var(--cream,#F5F0E8);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .4s ease}
     .app-loader.fade-out{opacity:0;pointer-events:none}
@@ -226,10 +226,14 @@
     </div>
   </div>
 
+  <!-- Toast notification -->
+  <div class="toast" id="toast"></div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.3/jspdf.umd.min.js"></script>
   <script>
     (function() {
+      var APP_VERSION = '__BUILD_HASH__';
       var files = ['logo-data.js', 'app.js'];
       var i = 0;
       var scriptsReady = false;
@@ -253,7 +257,7 @@
           return;
         }
         var s = document.createElement('script');
-        s.src = files[i++];
+        s.src = files[i++] + '?v=' + APP_VERSION;
         s.onload = next;
         document.body.appendChild(s);
       })();

@@ -287,24 +287,21 @@
     exportBtn.textContent = 'Generating...';
 
     try {
-      var clone = cert.cloneNode(true);
-      clone.style.transform = 'none';
-      clone.style.position = 'absolute';
-      clone.style.left = '-9999px';
-      clone.style.top = '0';
-      document.body.appendChild(clone);
-
-      var canvas = await html2canvas(clone, {
+      var canvas = await html2canvas(cert, {
         scale: 3,
         useCORS: true,
         allowTaint: true,
         backgroundColor: null,
         width: 1122,
         height: 794,
-        logging: false
+        logging: false,
+        onclone: function(doc, el) {
+          el.style.transform = 'none';
+          el.style.position = 'absolute';
+          el.style.left = '0';
+          el.style.top = '0';
+        }
       });
-
-      document.body.removeChild(clone);
 
       var { jsPDF } = window.jspdf;
       var pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
@@ -316,6 +313,7 @@
 
       var fileName = (nameInput.value || 'certificate').replace(/\s+/g, '_');
       pdf.save(`ECSF_Certificate_${fileName}.pdf`);
+      showToast('Export complete');
     } catch (err) {
       console.error('PDF export error:', err);
       alert('PDF generation failed: ' + err.message);
@@ -323,5 +321,17 @@
       exportBtn.disabled = false;
       exportBtn.textContent = 'Export PDF';
     }
+  }
+
+  // --- Toast notification ---
+  var toastEl = document.getElementById('toast');
+  var toastTimer;
+  function showToast(msg) {
+    clearTimeout(toastTimer);
+    toastEl.textContent = msg;
+    toastEl.classList.add('visible');
+    toastTimer = setTimeout(function() {
+      toastEl.classList.remove('visible');
+    }, 2500);
   }
 })();
