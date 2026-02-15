@@ -822,6 +822,34 @@ body {
   height: 24px;
 }
 
+/* Sidebar close button (hidden on desktop) */
+.sidebar-close-btn {
+  display: none;
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 101;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--white);
+  border: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sidebar-close-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.sidebar-close-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
 /* === Responsive: Tablet === */
 @media (max-width: 900px) {
   .sidebar {
@@ -890,6 +918,11 @@ body {
 
   /* Mobile floating menu button */
   .mobile-menu-btn {
+    display: flex;
+  }
+
+  /* Show close button on mobile */
+  .sidebar-close-btn {
     display: flex;
   }
 

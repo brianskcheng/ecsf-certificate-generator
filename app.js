@@ -77,8 +77,11 @@
     setTimeout(scalePreview, 320);
   });
 
+  const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+
   mobileMenuBtn.addEventListener('click', openMobileSidebar);
   sidebarBackdrop.addEventListener('click', closeMobileSidebar);
+  sidebarCloseBtn.addEventListener('click', closeMobileSidebar);
 
   // --- Signature mode toggle ---
   sigModeCursive.addEventListener('click', () => {
