@@ -7,7 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Lora:ital,wght@0,400;0,700;1,400;1,600&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <script>var _cb = Date.now();</script>
+  <link rel="stylesheet" id="mainCSS" href="styles.css">
+  <script>document.getElementById('mainCSS').href = 'styles.css?' + _cb;</script>
 </head>
 <body>
 
@@ -205,9 +207,21 @@
     </div>
   </div>
 
-  <script src="logo-data.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.3/jspdf.umd.min.js"></script>
-  <script src="app.js"></script>
+  <script>
+    (function() {
+      var v = _cb;
+      var files = ['logo-data.js', 'app.js'];
+      var i = 0;
+      (function next() {
+        if (i >= files.length) return;
+        var s = document.createElement('script');
+        s.src = files[i++] + '?' + v;
+        s.onload = next;
+        document.body.appendChild(s);
+      })();
+    })();
+  </script>
 </body>
 </html>
