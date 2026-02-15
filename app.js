@@ -48,6 +48,17 @@
   const infoModal = document.getElementById('infoModal');
   const infoClose = document.getElementById('infoClose');
 
+  var embedCodeEl = document.getElementById('embedCode');
+  var embedCopyBtn = document.getElementById('embedCopyBtn');
+  var embedSnippet = '<iframe src="' + window.location.href.split('?')[0] + '" width="100%" height="700" frameborder="0"></iframe>';
+  embedCodeEl.textContent = embedSnippet;
+
+  embedCopyBtn.addEventListener('click', function() {
+    navigator.clipboard.writeText(embedSnippet).then(function() {
+      showToast('Copied to clipboard');
+    });
+  });
+
   infoBtn.addEventListener('click', () => infoModal.classList.remove('hidden'));
   infoClose.addEventListener('click', () => infoModal.classList.add('hidden'));
   infoModal.addEventListener('click', (e) => {
