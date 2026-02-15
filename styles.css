@@ -102,27 +102,23 @@ body {
 
 /* Info modal extras */
 .info-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 0.75rem;
   margin: 0.75rem 0 1rem;
 }
 
 .info-grid p {
+  display: contents;
   font-family: 'Montserrat', sans-serif;
   font-size: 0.85rem;
   color: var(--text-muted);
-  margin-bottom: 0.4rem;
   line-height: 1.5;
-}
-
-.info-grid p:last-child {
-  margin-bottom: 0;
 }
 
 .info-grid strong {
   color: var(--text-dark);
   font-weight: 600;
-  display: inline-block;
-  min-width: 75px;
-  margin-right: 0.5rem;
 }
 
 .info-github-link {
