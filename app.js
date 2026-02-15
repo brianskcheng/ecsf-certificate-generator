@@ -286,21 +286,15 @@
     exportBtn.disabled = true;
     exportBtn.textContent = 'Generating...';
 
-    const savedTransform = cert.style.transform;
-    const savedPosition = cert.style.position;
-    const savedLeft = cert.style.left;
-    const savedTop = cert.style.top;
-
     try {
-      cert.style.transform = 'none';
-      cert.style.position = 'relative';
-      cert.style.left = '0';
-      cert.style.top = '0';
-      wrapper.style.overflow = 'visible';
+      var clone = cert.cloneNode(true);
+      clone.style.transform = 'none';
+      clone.style.position = 'absolute';
+      clone.style.left = '-9999px';
+      clone.style.top = '0';
+      document.body.appendChild(clone);
 
-      await new Promise(r => setTimeout(r, 300));
-
-      const canvas = await html2canvas(cert, {
+      var canvas = await html2canvas(clone, {
         scale: 3,
         useCORS: true,
         allowTaint: true,
@@ -310,26 +304,22 @@
         logging: false
       });
 
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-      const pageW = pdf.internal.pageSize.getWidth();
-      const pageH = pdf.internal.pageSize.getHeight();
-      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      document.body.removeChild(clone);
+
+      var { jsPDF } = window.jspdf;
+      var pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+      var pageW = pdf.internal.pageSize.getWidth();
+      var pageH = pdf.internal.pageSize.getHeight();
+      var imgData = canvas.toDataURL('image/jpeg', 0.95);
 
       pdf.addImage(imgData, 'JPEG', 0, 0, pageW, pageH);
 
-      const fileName = (nameInput.value || 'certificate').replace(/\s+/g, '_');
+      var fileName = (nameInput.value || 'certificate').replace(/\s+/g, '_');
       pdf.save(`ECSF_Certificate_${fileName}.pdf`);
     } catch (err) {
       console.error('PDF export error:', err);
       alert('PDF generation failed: ' + err.message);
     } finally {
-      cert.style.transform = savedTransform;
-      cert.style.position = savedPosition;
-      cert.style.left = savedLeft;
-      cert.style.top = savedTop;
-      wrapper.style.overflow = '';
-      scalePreview();
       exportBtn.disabled = false;
       exportBtn.textContent = 'Export PDF';
     }
