@@ -2,7 +2,7 @@
 
 A browser-based certificate generator built for the Exeter Chinese Student Fellowship. Fill in the details, see a live preview, and export to PDF -- no server or installation required.
 
-**Version:** 1.1 | **Author:** Brian Cheng | **Released:** February 2026
+**Version:** 1.2 | **Author:** Brian Cheng | **Released:** February 2026
 
 ## Features
 
@@ -13,9 +13,12 @@ A browser-based certificate generator built for the Exeter Chinese Student Fello
 - **Signature options** -- cursive text or freehand draw
 - **PDF export** -- one-click download as a formatted A4 landscape PDF
 - **Export validation** -- warns when required fields are missing, with option to export anyway
+- **Loading screen** -- displays a spinner until all resources (fonts, scripts) are fully loaded
 - **Collapsible sidebar** -- maximize preview space when needed
-- **Responsive layout** -- adapts to smaller screens with a mobile-friendly menu
-- **About dialog** -- in-app info and link to the GitHub repository
+- **Responsive layout** -- mobile-friendly overlay menu for phones in portrait and landscape
+- **Embed support** -- copy an iframe snippet from the About dialog to embed the generator on any site
+- **About dialog** -- in-app info, GitHub link, and embed code
+- **Toast notifications** -- non-intrusive feedback on actions like export and copy
 
 ## Usage
 
@@ -26,6 +29,10 @@ Open `index.html` in any modern browser. No build step or install required.
 3. Set the date and signatory name.
 4. Choose a signature style -- cursive text or draw your own.
 5. Click **Export PDF** to download the certificate.
+
+### Embedding
+
+To embed the generator on another site, open the About dialog (the **i** button) and click the copy icon next to the iframe code.
 
 ## Tech Stack
 
