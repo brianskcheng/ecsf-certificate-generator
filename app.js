@@ -59,7 +59,7 @@
   const sidebarBackdrop = document.getElementById('sidebarBackdrop');
 
   function isMobile() {
-    return window.matchMedia('(max-width: 640px)').matches;
+    return window.matchMedia('(max-width: 900px)').matches;
   }
 
   function openMobileSidebar() {

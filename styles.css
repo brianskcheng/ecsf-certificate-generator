@@ -850,28 +850,8 @@ body {
   height: 18px;
 }
 
-/* === Responsive: Tablet === */
+/* === Responsive: Mobile & Tablet (phones in any orientation, small tablets) === */
 @media (max-width: 900px) {
-  .sidebar {
-    width: 280px;
-    min-width: 280px;
-  }
-
-  .sidebar.collapsed {
-    margin-left: -280px;
-  }
-
-  .sidebar-toggle {
-    left: 280px;
-  }
-
-  .sidebar.collapsed ~ .sidebar-toggle {
-    left: 0;
-  }
-}
-
-/* === Responsive: Mobile === */
-@media (max-width: 640px) {
   .app-main {
     flex-direction: column;
   }
